@@ -1,0 +1,34 @@
+AWSTemplateFormatVersion: "2010-09-09"
+
+Resources:
+  EnvironmentName:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: /iac/udagram/EnvironmentName
+      Type: String
+      Value: "udacity-project"
+  AppKey:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: /iac/udagram/AppKey
+      Type: String
+      Value: "udagram"
+  Ubuntu18AMI:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: /iac/udagram/ubuntu18AMI
+      Type: String
+      Value: "ami-0d4a6cb3b9449822a"
+  KeyPair:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: /iac/udagram/EC2KeyPair
+      Type: String
+      Value: "udacity-key"
+
+  EC2IntanceType:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: /iac/udagram/EC2IntanceType
+      Type: String
+      Value: "t3.small"

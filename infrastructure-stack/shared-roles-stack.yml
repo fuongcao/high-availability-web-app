@@ -1,0 +1,52 @@
+AWSTemplateFormatVersion: "2010-09-09"
+
+Mappings:
+  RegionMap:
+    us-east-1:
+      Short: use1
+      Shorter: e1
+    us-west-2:
+      Short: usw2
+      Shorter: w2
+
+Parameters:
+  AppKey:
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: /iac/udagram/AppKey
+
+
+Resources:
+  IamWebAppRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub
+      - ${AppKey}-IamWebAppRole-${RegionShort}
+      - RegionShort: !FindInMap [RegionMap, !Ref "AWS::Region", Short]
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: ec2.amazonaws.com
+            Action: sts:AssumeRole
+      Path: /
+  RolePolicies:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyName: WebAppRolePolicy
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Action: 's3:*'
+            Resource: '*'
+      Roles:
+        - !Ref IamWebAppRole
+
+Outputs:
+  IamWebAppRoleArn:
+    Description: IAM Role for EC2
+    Value: !GetAtt IamWebAppRole.Arn
+    Export:
+      Name: !Sub ${AppKey}-IamWebAppRoleArn
+  

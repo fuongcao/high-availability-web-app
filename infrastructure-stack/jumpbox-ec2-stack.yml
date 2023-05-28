@@ -1,0 +1,48 @@
+AWSTemplateFormatVersion: "2010-09-09"
+
+Parameters:
+  EnvironmentName:
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: /iac/udagram/EnvironmentName
+  AMI:
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: /iac/udagram/ubuntu18AMI
+  EC2KeyPair:
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: /iac/udagram/EC2KeyPair
+
+Resources:
+  JumpBoxSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: JumpBoxSecurityGroup
+      GroupDescription: Allow http to our load balancer
+      VpcId: 
+        Fn::ImportValue: !Sub "${EnvironmentName}-VPCID"
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+      SecurityGroupEgress:
+        - IpProtocol: tcp
+          FromPort: 0
+          ToPort: 65535
+          CidrIp: 0.0.0.0/0
+      Tags:
+        - Key: Name
+          Value: !Sub ${EnvironmentName}-JumpBoxSecurityGroup
+
+  JumBoxEC2:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: !Ref AMI
+      InstanceType: t2.micro
+      KeyName: !Ref EC2KeyPair
+      SecurityGroupIds:
+        - !Ref JumpBoxSecurityGroup
+      SubnetId: 
+        Fn::ImportValue: !Sub "${EnvironmentName}-PUB1-SN"
+      Tags:
+        - Key: Name
+          Value: JumBoxEC2
