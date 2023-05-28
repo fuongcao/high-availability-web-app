@@ -50,9 +50,6 @@ The hands-on experience for deploying a dummy application (a sample JavaScript o
 #### :star: Working Test
 >![Working Test](deployment-images/webapp-work.png)
 
-#### :star: Working Test
->![Working Test](deployment-images/webapp-work.png)
-
 ### 3.Create Bastion Host / jumpbox stack (option)
 > aws cloudformation create-stack --stack-name iac-jumpbox-ec2-stack --template-body file://infrastructure-stack/jumpbox-ec2-stack.yml --capabilities "CAPABILITY_IAM" "CAPABILITY_NAMED_IAM"
 
