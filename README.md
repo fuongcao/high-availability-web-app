@@ -50,13 +50,13 @@ The hands-on experience for deploying a dummy application (a sample JavaScript o
 #### :star: Working Test
 >![Working Test](deployment-images/webapp-work.png)
 
-### 3.Create Bastion Host / jumpbox stack (option)
+### 4.Create Bastion Host / jumpbox stack (option)
 > aws cloudformation create-stack --stack-name iac-jumpbox-ec2-stack --template-body file://infrastructure-stack/jumpbox-ec2-stack.yml --capabilities "CAPABILITY_IAM" "CAPABILITY_NAMED_IAM"
 
 #### :star: Deploy jumpbox-stack
 >![Bastion Host](deployment-images/jumpbox.png)
 
-### 4.Create shared iam roles stack (option)
+### 5.Create shared iam roles stack (option)
 > aws cloudformation create-stack --stack-name iac-shared-roles-stack --template-body file://infrastructure-stack/shared-roles-stack.yml --capabilities "CAPABILITY_IAM" "CAPABILITY_NAMED_IAM"
 
 
@@ -69,7 +69,7 @@ The hands-on experience for deploying a dummy application (a sample JavaScript o
 ### 2.Delete network stack
 > aws cloudformation delete-stack --stack-name iac-network-stack
 
-### 2.Delete jumpbox-ec2 stack (option)
+### 3.Delete jumpbox-ec2 stack (option)
 > aws cloudformation delete-stack --stack-name iac-jumpbox-ec2-stack
 
 
